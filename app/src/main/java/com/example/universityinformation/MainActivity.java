@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
+        generateFacultiesMenu(this.faculties);
         NavigationView navigationView = binding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_fktipm)
@@ -54,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    protected void generateFacultiesMenu(List<String> faculties) {
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         for (String faculty : faculties) {
@@ -64,7 +63,12 @@ public class MainActivity extends AppCompatActivity {
                     new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            FacultyFragment fragment = new FacultyFragment(faculty);
+                            int size = menu.size();
+                            for (int i = 0; i < size; i++) {
+                                menu.getItem(i).setCheckable(false);
+                            }
+                            menuItem.setChecked(true);
+                            FacultyFragment fragment = new FacultyFragment(String.valueOf(menuItem.getItemId()));
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.faculty_information, fragment);
                             ft.commit();
