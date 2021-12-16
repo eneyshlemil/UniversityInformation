@@ -1,6 +1,8 @@
 package com.example.universityinformation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -56,9 +58,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         NavigationView navigationView = findViewById(R.id.nav_view);
-        final Menu menu = navigationView.getMenu();
+        Menu menu = navigationView.getMenu();
         for (String faculty : faculties) {
-            menu.add(faculty);
+            menu.add(faculty).setOnMenuItemClickListener(
+                    new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            Intent intent = new Intent(MainActivity.this, FacultyActivity.class);
+                            intent.putExtra("faculty", faculty);
+                            startActivity(intent);
+                            return false;
+                        }
+                    }
+            );
         }
     }
 
