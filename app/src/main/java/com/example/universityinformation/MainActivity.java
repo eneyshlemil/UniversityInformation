@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         generateFacultiesMenu(this.faculties);
         NavigationView navigationView = binding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_fktipm)
+                R.id.nav_home)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.faculty_information);
