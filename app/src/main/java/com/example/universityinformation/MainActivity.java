@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 
+import com.example.universityinformation.model.Faculty;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -24,23 +25,22 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private List<String> faculties;
+    private List<Faculty> faculties;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.faculties = Arrays.asList(new String[]{"1", "2", "3"});
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
+        this.faculties = fetchFaculties();
         generateFacultiesMenu(this.faculties);
         NavigationView navigationView = binding.navView;
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home)
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.faculty_information);
@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    protected void generateFacultiesMenu(List<String> faculties) {
+    protected void generateFacultiesMenu(List<Faculty> faculties) {
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
-        for (String faculty : faculties) {
-            menu.add(faculty).setOnMenuItemClickListener(
+        for (Faculty faculty : faculties) {
+            menu.add(faculty.getName()).setOnMenuItemClickListener(
                     new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 menu.getItem(i).setCheckable(false);
                             }
                             menuItem.setChecked(true);
-                            FacultyFragment fragment = new FacultyFragment(String.valueOf(menuItem.getItemId()));
+                            FacultyFragment fragment = new FacultyFragment(faculty);
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.faculty_information, fragment);
                             ft.commit();
@@ -77,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
                     }
             );
         }
+    }
+
+    protected List<Faculty> fetchFaculties() {
+        Faculty fktipm = new Faculty(1, "ФКТиПМ");
+        Faculty matfak = new Faculty(2, "Матфак");
+        Faculty fismo = new Faculty(3, "ФИСМО");
+        Faculty fiztech = new Faculty(4, "ФизТех");
+        Faculty filfak = new Faculty(5, "ФилФак");
+        return Arrays.asList(fktipm, matfak, fismo, fiztech, filfak);
     }
 
     @Override
