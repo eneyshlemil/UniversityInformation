@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FacultyFragment">
+    tools:context=".ui.home.FacultyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
     <TextView
-        android:id="@+id/tvFaculty"
         android:layout_width="match_parent"
-        android:layout_height="514dp"
-        android:text="TextView" />
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

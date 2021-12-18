@@ -1,14 +1,13 @@
 package com.example.universityinformation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 
 import com.example.universityinformation.model.Faculty;
+import com.example.universityinformation.ui.home.FacultyFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -63,11 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            int size = menu.size();
-                            for (int i = 0; i < size; i++) {
-                                menu.getItem(i).setCheckable(false);
-                            }
-                            menuItem.setChecked(true);
                             FacultyFragment fragment = new FacultyFragment(faculty);
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.faculty_information, fragment);
@@ -75,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                             return false;
                         }
                     }
-            );
+            ).setCheckable(true);
         }
     }
 
